@@ -1,0 +1,49 @@
+domain: "high_voltage_power"
+version: "1.0.0"
+required_columns:
+  - "timestamp"
+  - "machine_id"
+  - "voltage"
+  - "current"
+  - "temperature"
+  - "pressure"
+  - "anomaly"
+
+column_types:
+  timestamp: "datetime"
+  machine_id: "string"
+  voltage: "float"
+  current: "float"
+  temperature: "float"
+  pressure: "float"
+  oil_temperature: "float"
+  vibration: "float"
+  anomaly: "integer"
+
+missing_threshold: 0.05  # Max 5% missing allowed per column
+
+value_ranges:
+  voltage:
+    min: 0.0
+    max: 500.0
+    unit: "V"
+  current:
+    min: 0.0
+    max: 100.0
+    unit: "A"
+  temperature:
+    min: -20.0
+    max: 150.0
+    unit: "degC"
+  pressure:
+    min: 0.0
+    max: 50.0
+    unit: "bar"
+  oil_temperature:
+    min: -20.0
+    max: 140.0
+    unit: "degC"
+  vibration:
+    min: 0.0
+    max: 100.0
+    unit: "mm/s"

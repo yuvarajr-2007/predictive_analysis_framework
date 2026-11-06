@@ -1,0 +1,19 @@
+domain: "high_voltage_power"
+version: "1.0.0"
+constraints:
+  - column: "voltage"
+    rule: "non_negative"
+    min: 0.0
+    description: "Voltage cannot be negative in this DC/AC rectified system"
+  - column: "current"
+    rule: "non_negative"
+    min: 0.0
+    description: "Current magnitude cannot be negative"
+  - column: "pressure"
+    rule: "non_negative"
+    min: 0.0
+    description: "Hydraulic/atmospheric pressure cannot be negative"
+  - column: "temperature"
+    min: -50.0
+    max: 200.0
+    description: "Operating temperature physical hardware envelope"

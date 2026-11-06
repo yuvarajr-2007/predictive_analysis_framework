@@ -1,0 +1,32 @@
+domain: "high_voltage_power"
+version: "1.0.0"
+groups:
+  electrical:
+    - "voltage"
+    - "current"
+  thermal:
+    - "temperature"
+    - "oil_temperature"
+  mechanical:
+    - "pressure"
+    - "vibration"
+
+interactions:
+  - name: "power_calc"
+    operation: "multiply"
+    inputs: ["voltage", "current"]
+    reason: "Power = voltage x current (physics: P = V x I)"
+  - name: "resistance_proxy"
+    operation: "ratio"
+    inputs: ["voltage", "current"]
+    reason: "Resistance proxy = voltage / current (physics: R = V / I)"
+  - name: "thermal_differential"
+    operation: "subtract"
+    inputs: ["oil_temperature", "temperature"]
+    reason: "Internal oil temp minus external chassis temp"
+
+bins:
+  - column: "temperature"
+    output_name: "temp_level"
+    bins: [-30.0, 40.0, 70.0, 160.0]
+    labels: ["low", "normal", "high"]

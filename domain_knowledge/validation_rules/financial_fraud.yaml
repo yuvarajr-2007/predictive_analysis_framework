@@ -1,0 +1,30 @@
+domain: "financial_fraud"
+version: "1.0.0"
+required_columns:
+  - "timestamp"
+  - "user_id"
+  - "amount"
+  - "velocity_1h"
+  - "risk_score"
+  - "anomaly"
+
+column_types:
+  timestamp: "datetime"
+  user_id: "string"
+  amount: "float"
+  velocity_1h: "float"
+  risk_score: "float"
+  location_entropy: "float"
+  anomaly: "integer"
+
+missing_threshold: 0.05
+
+value_ranges:
+  amount:
+    min: 0.01
+    max: 100000.0
+    unit: "USD"
+  risk_score:
+    min: 0.0
+    max: 1.0
+    unit: "score"

@@ -1,0 +1,164 @@
+{
+  "features": {
+    "power_calc": {
+      "name": "power_calc",
+      "data_type": "float64",
+      "operation": "multiply",
+      "source_columns": [
+        "voltage",
+        "current"
+      ],
+      "reason": "Power = voltage x current (physics: P = V x I)",
+      "origin": "domain_template",
+      "rows_count": 1200,
+      "parquet_path": "D:\\predictive_framework\\feature_store\\features\\power_calc.parquet",
+      "created_at": "2026-11-06T16:31:02Z",
+      "version": 1
+    },
+    "resistance_proxy": {
+      "name": "resistance_proxy",
+      "data_type": "float64",
+      "operation": "ratio",
+      "source_columns": [
+        "voltage",
+        "current"
+      ],
+      "reason": "Resistance proxy = voltage / current (physics: R = V / I)",
+      "origin": "domain_template",
+      "rows_count": 1200,
+      "parquet_path": "D:\\predictive_framework\\feature_store\\features\\resistance_proxy.parquet",
+      "created_at": "2026-11-06T16:31:02Z",
+      "version": 1
+    },
+    "thermal_differential": {
+      "name": "thermal_differential",
+      "data_type": "float64",
+      "operation": "subtract",
+      "source_columns": [
+        "oil_temperature",
+        "temperature"
+      ],
+      "reason": "Internal oil temp minus external chassis temp",
+      "origin": "domain_template",
+      "rows_count": 1200,
+      "parquet_path": "D:\\predictive_framework\\feature_store\\features\\thermal_differential.parquet",
+      "created_at": "2026-11-06T16:31:02Z",
+      "version": 1
+    },
+    "temp_level": {
+      "name": "temp_level",
+      "data_type": "object",
+      "operation": "bin",
+      "source_columns": [
+        "temperature"
+      ],
+      "reason": "Domain defined threshold binning",
+      "origin": "domain_template",
+      "rows_count": 1200,
+      "parquet_path": "D:\\predictive_framework\\feature_store\\features\\temp_level.parquet",
+      "created_at": "2026-11-06T16:31:02Z",
+      "version": 1
+    },
+    "current_log1p": {
+      "name": "current_log1p",
+      "data_type": "float64",
+      "operation": "log1p",
+      "source_columns": [
+        "current"
+      ],
+      "reason": "Normalize heavy tail in current (skewness=3.533)",
+      "origin": "eda_suggestion",
+      "rows_count": 1200,
+      "parquet_path": "D:\\predictive_framework\\feature_store\\features\\current_log1p.parquet",
+      "created_at": "2026-11-06T16:31:02Z",
+      "version": 1
+    },
+    "temperature_log1p": {
+      "name": "temperature_log1p",
+      "data_type": "float64",
+      "operation": "log1p",
+      "source_columns": [
+        "temperature"
+      ],
+      "reason": "Normalize heavy tail in temperature (skewness=2.087)",
+      "origin": "eda_suggestion",
+      "rows_count": 1200,
+      "parquet_path": "D:\\predictive_framework\\feature_store\\features\\temperature_log1p.parquet",
+      "created_at": "2026-11-06T16:31:02Z",
+      "version": 1
+    },
+    "oil_temperature_log1p": {
+      "name": "oil_temperature_log1p",
+      "data_type": "float64",
+      "operation": "log1p",
+      "source_columns": [
+        "oil_temperature"
+      ],
+      "reason": "Normalize heavy tail in oil_temperature (skewness=2.269)",
+      "origin": "eda_suggestion",
+      "rows_count": 1200,
+      "parquet_path": "D:\\predictive_framework\\feature_store\\features\\oil_temperature_log1p.parquet",
+      "created_at": "2026-11-06T16:31:02Z",
+      "version": 1
+    },
+    "vibration_log1p": {
+      "name": "vibration_log1p",
+      "data_type": "float64",
+      "operation": "log1p",
+      "source_columns": [
+        "vibration"
+      ],
+      "reason": "Normalize heavy tail in vibration (skewness=4.449)",
+      "origin": "eda_suggestion",
+      "rows_count": 1200,
+      "parquet_path": "D:\\predictive_framework\\feature_store\\features\\vibration_log1p.parquet",
+      "created_at": "2026-11-06T16:31:02Z",
+      "version": 1
+    },
+    "temperature_per_oil_temperature": {
+      "name": "temperature_per_oil_temperature",
+      "data_type": "float64",
+      "operation": "ratio",
+      "source_columns": [
+        "temperature",
+        "oil_temperature"
+      ],
+      "reason": "Capture physical coupling ratio between temperature and oil_temperature",
+      "origin": "eda_suggestion",
+      "rows_count": 1200,
+      "parquet_path": "D:\\predictive_framework\\feature_store\\features\\temperature_per_oil_temperature.parquet",
+      "created_at": "2026-11-06T16:31:02Z",
+      "version": 1
+    },
+    "timestamp_hour": {
+      "name": "timestamp_hour",
+      "data_type": "int32",
+      "operation": "datetime_part",
+      "source_columns": [
+        "timestamp"
+      ],
+      "reason": "Extract diurnal/hourly operational cycles.",
+      "origin": "eda_suggestion",
+      "rows_count": 1200,
+      "parquet_path": "D:\\predictive_framework\\feature_store\\features\\timestamp_hour.parquet",
+      "created_at": "2026-11-06T16:31:02Z",
+      "version": 1
+    },
+    "test_feat": {
+      "name": "test_feat",
+      "data_type": "int64",
+      "operation": "multiply",
+      "source_columns": [
+        "a",
+        "b"
+      ],
+      "reason": "test registration",
+      "origin": "feature_engineering_agent",
+      "rows_count": 3,
+      "parquet_path": "D:\\predictive_framework\\feature_store\\features\\test_feat.parquet",
+      "created_at": "2026-11-06T16:22:53Z",
+      "version": 1
+    }
+  },
+  "version": "1.0.0"
+}

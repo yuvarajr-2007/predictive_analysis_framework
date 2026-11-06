@@ -1,0 +1,16 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local user/appdata cache from Streamlit run
+.cache/
+AppData/
+catboost_info/
+
+# Credentials
+.streamlit/credentials.toml
+
+# OS generated
+.DS_Store
+Thumbs.db

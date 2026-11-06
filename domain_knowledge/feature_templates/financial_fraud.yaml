@@ -1,0 +1,25 @@
+domain: "financial_fraud"
+version: "1.0.0"
+groups:
+  financial:
+    - "amount"
+    - "velocity_1h"
+  behavioral:
+    - "risk_score"
+    - "location_entropy"
+
+interactions:
+  - name: "amount_x_velocity"
+    operation: "multiply"
+    inputs: ["amount", "velocity_1h"]
+    reason: "Surge interaction: large transaction combined with high frequency velocity"
+  - name: "risk_scaled_amount"
+    operation: "multiply"
+    inputs: ["amount", "risk_score"]
+    reason: "Exposure weighting by current risk score"
+
+bins:
+  - column: "amount"
+    output_name: "amount_tier"
+    bins: [0.0, 50.0, 500.0, 100000.0]
+    labels: ["micro", "standard", "high_value"]
