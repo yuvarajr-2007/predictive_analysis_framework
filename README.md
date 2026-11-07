@@ -1,4 +1,4 @@
-# ⚡ Anomaly Agentic AI Framework: End-to-End Autonomous Predictive Analytics
+# ⚡ Predictive analysis Agentic AI Framework: End-to-End Autonomous Predictive Analytics
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Framework](https://img.shields.io/badge/Architecture-5--Layer%20Agentic%20AI-orange.svg)](#architecture-overview)
