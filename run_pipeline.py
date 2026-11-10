@@ -23,7 +23,7 @@ from layer4_reporting import ReportingOrchestrator
 from layer5_versioning import VersioningOrchestrator
 
 
-def run_pipeline(csv_path: str, domain: str = "high_voltage_power"):
+def run_pipeline(csv_path: str, domain: str = "high_voltage_power", target_column: str = None, time_column: str = None):
     print("=" * 80)
     print("[RUN] EXECUTING FULL ANOMALY AGENTIC AI FRAMEWORK (LAYERS 1 -> 5)")
     print("=" * 80)
@@ -32,6 +32,24 @@ def run_pipeline(csv_path: str, domain: str = "high_voltage_power"):
     print(f"\n[1] Ingesting dataset from: {csv_path}")
     df = pd.read_csv(csv_path)
     print(f"    Loaded {len(df)} rows and {len(df.columns)} columns.")
+
+    # Auto-detect target and time columns if not explicitly provided
+    if target_column is None:
+        for c in ["Prototype_Condition_Label", "anomaly", "risk_score", "target", "label"]:
+            if c in df.columns:
+                target_column = c
+                break
+        if target_column is None:
+            target_column = df.columns[-1]
+
+    if time_column is None:
+        for c in ["timestamp", "time", "date", "Cycle"]:
+            if c in df.columns:
+                time_column = c
+                break
+
+    print(f"    Target Column detected: '{target_column}'")
+    print(f"    Temporal/Grouping Column: '{time_column}'")
 
     # --------------------------------------------------------------------------
     # LAYER 1: VALIDATION
@@ -58,7 +76,7 @@ def run_pipeline(csv_path: str, domain: str = "high_voltage_power"):
     print("\n" + "-" * 40)
     print("[LAYER 2] ANALYSIS LAYER")
     print("-" * 40)
-    analysis_orch = AnalysisOrchestrator()
+    analysis_orch = AnalysisOrchestrator(target_column=target_column, time_column=time_column or "timestamp")
     analysis_res = analysis_orch.run(
         validated_df=validated_df,
         domain_name=domain,
@@ -81,7 +99,7 @@ def run_pipeline(csv_path: str, domain: str = "high_voltage_power"):
     print("\n" + "-" * 40)
     print("[LAYER 3] MODELLING LAYER")
     print("-" * 40)
-    modelling_orch = ModellingOrchestrator(target_column="anomaly", time_column="timestamp")
+    modelling_orch = ModellingOrchestrator(target_column=target_column, time_column=time_column or "timestamp")
     model_res = modelling_orch.run(
         engineered_df=engineered_df,
         eda_report=eda_report,

@@ -1,0 +1,12 @@
+{
+  "run_id": "run-6944d622",
+  "stages": {
+    "POST_MODELLING": {
+      "parquet_path": "D:\\predictive_framework\\checkpoints\\run-6944d622\\POST_MODELLING\\data.parquet",
+      "joblib_path": "D:\\predictive_framework\\checkpoints\\run-6944d622\\POST_MODELLING\\state.joblib",
+      "timestamp": "2026-11-07T09:09:43Z"
+    }
+  },
+  "latest_completed_stage": "POST_MODELLING",
+  "last_updated": "2026-11-07T09:09:43Z"
+}

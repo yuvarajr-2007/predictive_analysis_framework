@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipeline Run Report: run-2c06bf9a</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --accent: #3b82f6;
+            --border: #334155;
+            --pass-bg: #065f46;
+            --pass-text: #34d399;
+            --warn-bg: #854d0e;
+            --warn-text: #fde047;
+            --fail-bg: #991b1b;
+            --fail-text: #f87171;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 30px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2rem;
+            background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .meta-badges {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .badge {
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .badge-pass { background: var(--pass-bg); color: var(--pass-text); }
+        .badge-warn { background: var(--warn-bg); color: var(--warn-text); }
+        .badge-fail { background: var(--fail-bg); color: var(--fail-text); }
+        .badge-info { background: #1e3a8a; color: #93c5fd; }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        h2 {
+            margin-top: 0;
+            font-size: 1.4rem;
+            color: #38bdf8;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 8px;
+        }
+        h3 { font-size: 1.1rem; color: #e2e8f0; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 0.95rem;
+        }
+        th, td {
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background-color: #0f172a;
+            color: var(--text-sub);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+        tr:hover { background-color: #243248; }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .metric-box {
+            background-color: #0f172a;
+            border: 1px solid var(--border);
+            padding: 16px;
+            border-radius: 8px;
+        }
+        .metric-title { font-size: 0.8rem; color: var(--text-sub); text-transform: uppercase; }
+        .metric-num { font-size: 1.6rem; font-weight: 700; color: #f8fafc; margin-top: 4px; }
+        .disclaimer-box {
+            background-color: #172554;
+            border-left: 4px solid #3b82f6;
+            padding: 14px 18px;
+            border-radius: 4px;
+            margin: 16px 0;
+            font-size: 0.9rem;
+            color: #bfdbfe;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-top: 40px;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Predictive Analytics Framework: Verification &amp; Modelling Report</h1>
+            <div class="meta-badges">
+                <span class="badge badge-info">Run ID: run-2c06bf9a</span>
+                <span class="badge badge-info">Domain: silicon_anode_battery</span>
+                <span class="badge badge-info">Pipeline: v2.0.0</span>
+                <span class="badge badge-pass">
+                    Validation: PASS
+                </span>
+                <span class="badge badge-pass">Analysis Gate: PASSED WITH WARNINGS</span>
+                <span class="badge badge-pass">Champion: AutoGluon_Ensemble</span>
+            </div>
+        </div>
+
+        <!-- 1. Executive Narrative -->
+        <div class="card">
+            <h2>1. Executive Summary &amp; Narrative</h2>
+            <p style="font-size: 1.05rem; color: #cbd5e1;">Pipeline run 'run-2c06bf9a' evaluated a binary_classification dataset under the 'silicon_anode_battery' domain rules. Data validation concluded with status 'PASS' across 3 checks. Following feature engineering and deterministic gate verification, the modeling layer deployed 'AutoGluon_Ensemble' as the champion model using 'TimeSeriesSplit'. On the blind holdout partition, the champion attained an ROC-AUC of 0.9995 and a PR-AUC of 0.25.</p>
+            
+            <h3>Key Operational Observations</h3>
+            <ul>
+                
+                <li>Data Validation: Recorded 0 issues. Gate status: PASS.</li>
+                
+                <li>Dataset Geometry: Analyzed 10000 rows across 14 initial columns.</li>
+                
+                <li>Feature Engineering: Planned 8 safe features; Verification Gate status: PASSED WITH WARNINGS.</li>
+                
+                <li>Anomaly Detection: Calibrated threshold at 0.0004, identifying 120 anomalies (6.0% rate).</li>
+                
+            </ul>
+
+            <div class="disclaimer-box">
+                <strong>Trust &amp; Governance Limitations:</strong>
+                <ul>
+                    
+                    <li>Cross-Validation Split: Evaluations used TimeSeriesSplit (Chronological ordering detected on 'Cycle'. TimeSeriesSplit prevents future lookahead leakage.). Scores cannot be directly compared against non-stratified random splits.</li>
+                    
+                    <li>Feature Attributions: Feature importances reflect mathematical model influence within this sample and must not be interpreted as physical root cause.</li>
+                    
+                    <li>Operational Scope: Anomaly scores are probabilistic estimates subject to environmental drift and changing production baselines.</li>
+                    
+                </ul>
+            </div>
+        </div>
+
+        <!-- 2. Performance Metrics -->
+        <div class="card">
+            <h2>2. Model Evaluation on Blind Holdout Partition</h2>
+            <div class="grid-4">
+                <div class="metric-box">
+                    <div class="metric-title">ROC-AUC</div>
+                    <div class="metric-num">0.9995</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-title">PR-AUC</div>
+                    <div class="metric-num">0.25</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-title">F1-Score</div>
+                    <div class="metric-num">0.0165</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-title">Decision Threshold</div>
+                    <div class="metric-num">0.0004</div>
+                </div>
+            </div>
+
+            <h3>Evaluation Methodology</h3>
+            <p>
+                <strong>Cross-Validation Strategy:</strong> <code>TimeSeriesSplit</code><br>
+                <strong>Selection Justification:</strong> Chronological ordering detected on 'Cycle'. TimeSeriesSplit prevents future lookahead leakage.<br>
+                <strong>Decision Engine Route:</strong> <code>AutoGluon_Ensemble</code>
+            </p>
+
+            <h3>Candidate Model A/B Benchmarks</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Candidate Model</th>
+                        <th>Architecture</th>
+                        <th>Inference Latency (ms)</th>
+                        <th>Metrics</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td><strong>TabPFN_ZeroShot</strong> </td>
+                        <td>None</td>
+                        <td>0 ms</td>
+                        <td><code>{}</code></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><strong>AutoGluon_Ensemble</strong> <span class="badge badge-pass">Champion</span></td>
+                        <td>AutoGluon_Ensemble_Stacking</td>
+                        <td>3979.32 ms</td>
+                        <td><code>{'ROC-AUC': 0.9995, 'PR-AUC': 0.25, 'F1-Score': 0.0165, 'Precision': 0.0083, 'Recall': 1.0}</code></td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 3. Explainability & Feature Importance -->
+        <div class="card">
+            <h2>3. Feature Importance &amp; Model Sensitivity</h2>
+            <div class="disclaimer-box">
+                Feature importance scores reflect model sensitivity within this dataset and DO NOT prove physical or empirical causation.
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Sensitivity / Importance Score</th>
+                        <th>Interpretation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td><code>Energy_Wh_Est</code></td>
+                        <td><strong>0.2107</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><code>Capacity_Ah</code></td>
+                        <td><strong>0.1533</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><code>SOH_Percent_Est</code></td>
+                        <td><strong>0.114</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><code>Voltage_Min_V</code></td>
+                        <td><strong>0.0871</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><code>Temperature_C</code></td>
+                        <td><strong>0.0726</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><code>Cycle</code></td>
+                        <td><strong>0.0721</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><code>Voltage_Mean_V</code></td>
+                        <td><strong>0.0637</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><code>voltage_spread</code></td>
+                        <td><strong>0.0624</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><code>Voltage_Max_V</code></td>
+                        <td><strong>0.0373</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><code>Battery_ID</code></td>
+                        <td><strong>0.0334</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><code>effective_power_est</code></td>
+                        <td><strong>0.0297</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><code>soh_health_tier</code></td>
+                        <td><strong>0.0243</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><code>thermal_current_product</code></td>
+                        <td><strong>0.0213</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><code>Current_A</code></td>
+                        <td><strong>0.0181</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><code>Reference_Capacity_Ah</code></td>
+                        <td><strong>0.0</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><code>Nominal_Voltage_V</code></td>
+                        <td><strong>0.0</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><code>Data_Type</code></td>
+                        <td><strong>0.0</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><code>Capacity_Ah_per_Energy_Wh_Est</code></td>
+                        <td><strong>0.0</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><code>Capacity_Ah_per_SOH_Percent_Est</code></td>
+                        <td><strong>0.0</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><code>Energy_Wh_Est_per_SOH_Percent_Est</code></td>
+                        <td><strong>0.0</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><code>Cycle_hour</code></td>
+                        <td><strong>0.0</strong></td>
+                        <td>Model responsiveness upon feature variation</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 4. Quality Warnings & Ingestion Governance -->
+        <div class="card">
+            <h2>4. Data Ingestion &amp; Quality Auditing</h2>
+            <p>Checks executed: <code>['SchemaValidator', 'NullValidator', 'DomainValidator']</code></p>
+            
+            <p style="color: #34d399;">✓ Zero validation or schema issues flagged. Data strictly conformant with domain rules.</p>
+            
+        </div>
+
+        <!-- 5. Traceability & Artifact Registry -->
+        <div class="card">
+            <h2>5. Pipeline Traceability &amp; Artifact Links</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Artifact Description</th>
+                        <th>Identifier / Location</th>
+                        <th>Layer Provenance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Run Identification</td>
+                        <td><code>run-2c06bf9a</code></td>
+                        <td>Master Orchestrator</td>
+                    </tr>
+                    <tr>
+                        <td>Intermediate Checkpoint</td>
+                        <td><code>checkpoints/run-2c06bf9a_manifest.json</code></td>
+                        <td>Layer 5 (Versioning &amp; Concerns)</td>
+                    </tr>
+                    <tr>
+                        <td>Unified Model Summary</td>
+                        <td><code>experiments/run-2c06bf9a_model_summary.json</code></td>
+                        <td>Layer 3 (Modelling)</td>
+                    </tr>
+                    <tr>
+                        <td>HTML Self-Contained Report</td>
+                        <td><code>reports/run-2c06bf9a_report.html</code></td>
+                        <td>Layer 4 (Reporting)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            Generated autonomously by the Anomaly Agentic AI Framework &bull; 2026-11-07T10:17:43Z
+        </div>
+    </div>
+</body>
+</html>

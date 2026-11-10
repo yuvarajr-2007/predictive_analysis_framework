@@ -1,0 +1,19 @@
+domain: "silicon_anode_battery"
+version: "1.0.0"
+constraints:
+  - column: "Voltage_Min_V"
+    rule: "non_negative"
+    min: 0.0
+    description: "Cell voltage cannot be negative"
+  - column: "Current_A"
+    rule: "non_negative"
+    min: 0.0
+    description: "Current magnitude non-negative"
+  - column: "Capacity_Ah"
+    rule: "non_negative"
+    min: 0.0
+    description: "Cell charge capacity cannot be negative"
+  - column: "Temperature_C"
+    min: -20.0
+    max: 80.0
+    description: "Physical operating safety thermal envelope"

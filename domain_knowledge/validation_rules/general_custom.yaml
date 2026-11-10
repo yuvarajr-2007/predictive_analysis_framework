@@ -1,0 +1,4 @@
+domain: "general_custom"
+version: "1.0.0"
+required_columns: []  # Dynamically accepts any dataset schema
+missing_threshold: 0.15 # Max 15% missing allowed per column

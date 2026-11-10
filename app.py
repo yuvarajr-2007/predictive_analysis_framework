@@ -29,7 +29,7 @@ from layer4_reporting import ReportingOrchestrator
 from layer5_versioning import VersioningOrchestrator, ExperimentTracker, CheckpointManager, DriftDetector, FeatureRegistryClient
 
 st.set_page_config(
-    page_title="Anomaly Agentic AI Framework (5-Layer Platform)",
+    page_title="predictive analysis AI Framework (5-Layer Platform)",
     page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -107,10 +107,46 @@ st.sidebar.image("https://img.icons8.com/isometric/100/artificial-intelligence.p
 st.sidebar.title("Framework Control")
 st.sidebar.markdown("---")
 
+def smart_load_table(file_obj, filename: str) -> pd.DataFrame:
+    """Smart parser supporting CSV (auto-detecting comma, semicolon, tab), Parquet, and Excel."""
+    fn = filename.lower()
+    if fn.endswith(".parquet"):
+        return pd.read_parquet(file_obj)
+    elif fn.endswith(".xlsx") or fn.endswith(".xls"):
+        return pd.read_excel(file_obj)
+    else:
+        # CSV parsing with delimiter fallback
+        try:
+            df = pd.read_csv(file_obj, sep=None, engine="python")
+        except Exception:
+            file_obj.seek(0)
+            df = pd.read_csv(file_obj)
+
+        # Check if accidentally packed into a single column because of semicolons or tabs
+        if len(df.columns) == 1:
+            col0 = df.columns[0]
+            if ";" in col0:
+                file_obj.seek(0)
+                df = pd.read_csv(file_obj, sep=";")
+            elif "\t" in col0:
+                file_obj.seek(0)
+                df = pd.read_csv(file_obj, sep="\t")
+        return df
+
+
 # Domain Knowledge Selection
+domain_options = ["general_custom", "silicon_anode_battery", "high_voltage_power", "financial_fraud"]
+domain_labels = {
+    "general_custom": "🌐 General / Custom Dataset (Auto-Detect Schema)",
+    "silicon_anode_battery": "🔋 Silicon Anode Battery Cell",
+    "high_voltage_power": "⚡ High-Voltage Power Supply Telemetry",
+    "financial_fraud": "💳 Financial Fraud Detection"
+}
+
 domain = st.sidebar.selectbox(
     "Domain Knowledge Setting",
-    options=["high_voltage_power", "financial_fraud"],
+    options=domain_options,
+    format_func=lambda x: domain_labels.get(x, x),
     index=0,
     help="Selects the version-controlled domain templates, rules, and physical constraints."
 )
@@ -131,15 +167,10 @@ if dataset_source == "Upload New Dataset":
     )
     if uploaded_file is not None:
         try:
-            if uploaded_file.name.endswith(".csv"):
-                df_loaded = pd.read_csv(uploaded_file)
-            elif uploaded_file.name.endswith(".parquet"):
-                df_loaded = pd.read_parquet(uploaded_file)
-            else:
-                df_loaded = pd.read_excel(uploaded_file)
+            df_loaded = smart_load_table(uploaded_file, uploaded_file.name)
             st.session_state["raw_df"] = df_loaded
             st.session_state["dataset_name"] = uploaded_file.name
-            st.sidebar.success(f"Loaded {uploaded_file.name} ({len(df_loaded)} rows)")
+            st.sidebar.success(f"Loaded {uploaded_file.name} ({len(df_loaded)} rows, {len(df_loaded.columns)} columns)")
         except Exception as e:
             st.sidebar.error(f"Error loading file: {e}")
 else:
@@ -147,20 +178,28 @@ else:
         "Select Benchmark Dataset:",
         options=[
             ("sample_high_voltage_power.csv", "High-Voltage Power Supply Telemetry"),
-            ("sample_financial_fraud.csv", "Financial Fraud & Velocity Surges")
+            ("sample_financial_fraud.csv", "Financial Fraud & Velocity Surges"),
+            ("Silicon_Anode_Cell_Battery_Dataset.csv", "Silicon Anode Battery Cell Cycler (10k Rows)")
         ],
         format_func=lambda x: f"{x[1]} ({x[0]})"
     )
     if st.session_state["raw_df"] is None or st.session_state["dataset_name"] != benchmark_choice[0]:
         sample_path = Path("d:/predictive_framework/data") / benchmark_choice[0]
         if sample_path.exists():
-            st.session_state["raw_df"] = pd.read_csv(sample_path)
+            st.session_state["raw_df"] = smart_load_table(sample_path, sample_path.name)
             st.session_state["dataset_name"] = benchmark_choice[0]
 
 # Pipeline Configurations
 st.sidebar.subheader("2. Target & Temporal Config")
 col_options = list(st.session_state["raw_df"].columns) if st.session_state["raw_df"] is not None else ["anomaly"]
-target_col_default = "anomaly" if (st.session_state["raw_df"] is not None and "anomaly" in st.session_state["raw_df"].columns) else col_options[-1]
+
+# Smart detection of target
+if "Prototype_Condition_Label" in col_options:
+    target_col_default = "Prototype_Condition_Label"
+elif "anomaly" in col_options:
+    target_col_default = "anomaly"
+else:
+    target_col_default = col_options[-1]
 
 target_column = st.sidebar.selectbox(
     "Target / Anomaly Column:",
@@ -168,11 +207,18 @@ target_column = st.sidebar.selectbox(
     index=col_options.index(target_col_default) if target_col_default in col_options else 0
 )
 
+# Smart detection of timestamp / sequence
+time_col_default = "None"
+if "timestamp" in col_options:
+    time_col_default = "timestamp"
+elif "Cycle" in col_options:
+    time_col_default = "Cycle"
+
 time_col_options = ["None"] + col_options
 time_column = st.sidebar.selectbox(
-    "Timestamp Column (Optional):",
+    "Timestamp / Sequence Column (Optional):",
     options=time_col_options,
-    index=time_col_options.index("timestamp") if "timestamp" in time_col_options else 0
+    index=time_col_options.index(time_col_default) if time_col_default in time_col_options else 0
 )
 if time_column == "None":
     time_column = None
@@ -232,8 +278,8 @@ if st.sidebar.button("⚡ Run Full Pipeline (Layers 1-5)", type="primary", use_c
         st.rerun()
 
 # Main Header
-st.markdown('<div class="main-title">Anomaly Agentic AI Framework</div>', unsafe_allow_html=True)
-st.markdown('<div class="sub-title">Complete 5-Layer Universal Anomaly Detection Platform • Validation → Analysis → Modelling → Reporting → Versioning</div>', unsafe_allow_html=True)
+st.markdown('<div class="main-title">Predictive Analysis AI Framework</div>', unsafe_allow_html=True)
+st.markdown('<div class="sub-title">Complete 5-Layer Universal Predictive Analysis Platform • Validation → Analysis → Modelling → Reporting → Versioning</div>', unsafe_allow_html=True)
 
 # 5-Layer Visual Pipeline Status Bar
 c1, c2, c3, c4, c5, c6 = st.columns(6)

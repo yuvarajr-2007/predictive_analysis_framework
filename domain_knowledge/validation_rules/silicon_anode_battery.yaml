@@ -1,0 +1,60 @@
+domain: "silicon_anode_battery"
+version: "1.0.0"
+required_columns:
+  - "Battery_ID"
+  - "Cycle"
+  - "Voltage_Mean_V"
+  - "Voltage_Min_V"
+  - "Voltage_Max_V"
+  - "Current_A"
+  - "Temperature_C"
+  - "Capacity_Ah"
+  - "SOH_Percent_Est"
+  - "Prototype_Condition_Label"
+
+column_types:
+  Battery_ID: "string"
+  Cycle: "integer"
+  Voltage_Mean_V: "float"
+  Voltage_Min_V: "float"
+  Voltage_Max_V: "float"
+  Current_A: "float"
+  Temperature_C: "float"
+  Capacity_Ah: "float"
+  Nominal_Voltage_V: "float"
+  Energy_Wh_Est: "float"
+  SOH_Percent_Est: "float"
+  Reference_Capacity_Ah: "float"
+  Prototype_Condition_Label: "string"
+
+missing_threshold: 0.02
+
+value_ranges:
+  Voltage_Mean_V:
+    min: 2.5
+    max: 4.3
+    unit: "V"
+  Voltage_Min_V:
+    min: 2.0
+    max: 4.2
+    unit: "V"
+  Voltage_Max_V:
+    min: 2.8
+    max: 4.35
+    unit: "V"
+  Current_A:
+    min: 0.0
+    max: 20.0
+    unit: "A"
+  Temperature_C:
+    min: 0.0
+    max: 60.0
+    unit: "degC"
+  Capacity_Ah:
+    min: 1.0
+    max: 4.0
+    unit: "Ah"
+  SOH_Percent_Est:
+    min: 50.0
+    max: 110.0
+    unit: "%"

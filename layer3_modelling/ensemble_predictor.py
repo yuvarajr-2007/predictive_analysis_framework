@@ -35,6 +35,13 @@ except ImportError:
     HAS_CAT = False
 
 
+def _safe_prob(clf, X):
+    p = clf.predict_proba(X)
+    if p.shape[1] == 1:
+        return np.zeros(len(X)) if clf.classes_[0] == 0 else np.ones(len(X))
+    return p[:, 1]
+
+
 class EnsembleTabularPredictor:
     def __init__(self, optimize_metric: str = "PR-AUC", random_state: int = 42):
         self.optimize_metric = optimize_metric
@@ -47,7 +54,16 @@ class EnsembleTabularPredictor:
         X = df.copy()
         y = None
         if target_col and target_col in X.columns:
-            y = X[target_col].values
+            target_series = X[target_col]
+            if not pd.api.types.is_numeric_dtype(target_series):
+                val_counts = target_series.value_counts()
+                if len(val_counts) == 2:
+                    min_class = val_counts.index[-1]
+                    y = (target_series == min_class).astype(int).values
+                else:
+                    y = LabelEncoder().fit_transform(target_series.astype(str))
+            else:
+                y = pd.to_numeric(target_series, errors="coerce").fillna(0).values
             X = X.drop(columns=[target_col])
 
         # Remove raw non-informative IDs or datetime objects if present
@@ -93,7 +109,7 @@ class EnsembleTabularPredictor:
                     verbose=-1
                 )
                 lgb_clf.fit(X_train_df, y_train)
-                lgb_probs = lgb_clf.predict_proba(X_test_df)[:, 1]
+                lgb_probs = _safe_prob(lgb_clf, X_test_df)
                 model_preds["LightGBM"] = lgb_probs
                 feature_importances["LightGBM"] = lgb_clf.feature_importances_
             except Exception:
@@ -110,7 +126,7 @@ class EnsembleTabularPredictor:
                     eval_metric="logloss"
                 )
                 xgb_clf.fit(X_train_df, y_train)
-                xgb_probs = xgb_clf.predict_proba(X_test_df)[:, 1]
+                xgb_probs = _safe_prob(xgb_clf, X_test_df)
                 model_preds["XGBoost"] = xgb_probs
                 feature_importances["XGBoost"] = xgb_clf.feature_importances_
             except Exception:
@@ -127,7 +143,7 @@ class EnsembleTabularPredictor:
                     verbose=0
                 )
                 cat_clf.fit(X_train_df, y_train)
-                cat_probs = cat_clf.predict_proba(X_test_df)[:, 1]
+                cat_probs = _safe_prob(cat_clf, X_test_df)
                 model_preds["CatBoost"] = cat_probs
                 feature_importances["CatBoost"] = cat_clf.get_feature_importance()
             except Exception:
@@ -136,7 +152,7 @@ class EnsembleTabularPredictor:
         # 4. Fallback/Complementary: Random Forest & HistGradientBoosting
         rf_clf = RandomForestClassifier(n_estimators=50, max_depth=6, random_state=self.random_state)
         rf_clf.fit(X_train_df, y_train)
-        rf_probs = rf_clf.predict_proba(X_test_df)[:, 1]
+        rf_probs = _safe_prob(rf_clf, X_test_df)
         model_preds["RandomForest"] = rf_probs
         feature_importances["RandomForest"] = rf_clf.feature_importances_
 

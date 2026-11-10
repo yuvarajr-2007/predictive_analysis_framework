@@ -12,7 +12,7 @@
       "origin": "domain_template",
       "rows_count": 1200,
       "parquet_path": "D:\\predictive_framework\\feature_store\\features\\power_calc.parquet",
-      "created_at": "2026-11-06T16:31:02Z",
+      "created_at": "2026-11-07T09:09:43Z",
       "version": 1
     },
     "resistance_proxy": {
@@ -27,7 +27,7 @@
       "origin": "domain_template",
       "rows_count": 1200,
       "parquet_path": "D:\\predictive_framework\\feature_store\\features\\resistance_proxy.parquet",
-      "created_at": "2026-11-06T16:31:02Z",
+      "created_at": "2026-11-07T09:09:43Z",
       "version": 1
     },
     "thermal_differential": {
@@ -42,7 +42,7 @@
       "origin": "domain_template",
       "rows_count": 1200,
       "parquet_path": "D:\\predictive_framework\\feature_store\\features\\thermal_differential.parquet",
-      "created_at": "2026-11-06T16:31:02Z",
+      "created_at": "2026-11-07T09:09:43Z",
       "version": 1
     },
     "temp_level": {
@@ -56,7 +56,7 @@
       "origin": "domain_template",
       "rows_count": 1200,
       "parquet_path": "D:\\predictive_framework\\feature_store\\features\\temp_level.parquet",
-      "created_at": "2026-11-06T16:31:02Z",
+      "created_at": "2026-11-07T09:09:43Z",
       "version": 1
     },
     "current_log1p": {
@@ -70,7 +70,7 @@
       "origin": "eda_suggestion",
       "rows_count": 1200,
       "parquet_path": "D:\\predictive_framework\\feature_store\\features\\current_log1p.parquet",
-      "created_at": "2026-11-06T16:31:02Z",
+      "created_at": "2026-11-07T09:09:43Z",
       "version": 1
     },
     "temperature_log1p": {
@@ -84,7 +84,7 @@
       "origin": "eda_suggestion",
       "rows_count": 1200,
       "parquet_path": "D:\\predictive_framework\\feature_store\\features\\temperature_log1p.parquet",
-      "created_at": "2026-11-06T16:31:02Z",
+      "created_at": "2026-11-07T09:09:43Z",
       "version": 1
     },
     "oil_temperature_log1p": {
@@ -98,7 +98,7 @@
       "origin": "eda_suggestion",
       "rows_count": 1200,
       "parquet_path": "D:\\predictive_framework\\feature_store\\features\\oil_temperature_log1p.parquet",
-      "created_at": "2026-11-06T16:31:02Z",
+      "created_at": "2026-11-07T09:09:43Z",
       "version": 1
     },
     "vibration_log1p": {
@@ -112,7 +112,7 @@
       "origin": "eda_suggestion",
       "rows_count": 1200,
       "parquet_path": "D:\\predictive_framework\\feature_store\\features\\vibration_log1p.parquet",
-      "created_at": "2026-11-06T16:31:02Z",
+      "created_at": "2026-11-07T09:09:43Z",
       "version": 1
     },
     "temperature_per_oil_temperature": {
@@ -127,7 +127,7 @@
       "origin": "eda_suggestion",
       "rows_count": 1200,
       "parquet_path": "D:\\predictive_framework\\feature_store\\features\\temperature_per_oil_temperature.parquet",
-      "created_at": "2026-11-06T16:31:02Z",
+      "created_at": "2026-11-07T09:09:43Z",
       "version": 1
     },
     "timestamp_hour": {
@@ -141,7 +141,7 @@
       "origin": "eda_suggestion",
       "rows_count": 1200,
       "parquet_path": "D:\\predictive_framework\\feature_store\\features\\timestamp_hour.parquet",
-      "created_at": "2026-11-06T16:31:02Z",
+      "created_at": "2026-11-07T09:09:43Z",
       "version": 1
     },
     "test_feat": {
@@ -156,7 +156,125 @@
       "origin": "feature_engineering_agent",
       "rows_count": 3,
       "parquet_path": "D:\\predictive_framework\\feature_store\\features\\test_feat.parquet",
-      "created_at": "2026-11-06T16:22:53Z",
+      "created_at": "2026-11-07T10:35:57Z",
+      "version": 1
+    },
+    "voltage_spread": {
+      "name": "voltage_spread",
+      "data_type": "float64",
+      "operation": "subtract",
+      "source_columns": [
+        "Voltage_Max_V",
+        "Voltage_Min_V"
+      ],
+      "reason": "Voltage delta across cycle - proxy for internal cell impedance",
+      "origin": "domain_template",
+      "rows_count": 10000,
+      "parquet_path": "D:\\predictive_framework\\feature_store\\features\\voltage_spread.parquet",
+      "created_at": "2026-11-07T10:17:48Z",
+      "version": 1
+    },
+    "thermal_current_product": {
+      "name": "thermal_current_product",
+      "data_type": "float64",
+      "operation": "multiply",
+      "source_columns": [
+        "Temperature_C",
+        "Current_A"
+      ],
+      "reason": "Thermal-current stress metric (Joule heat proxy)",
+      "origin": "domain_template",
+      "rows_count": 10000,
+      "parquet_path": "D:\\predictive_framework\\feature_store\\features\\thermal_current_product.parquet",
+      "created_at": "2026-11-07T10:17:48Z",
+      "version": 1
+    },
+    "effective_power_est": {
+      "name": "effective_power_est",
+      "data_type": "float64",
+      "operation": "multiply",
+      "source_columns": [
+        "Voltage_Mean_V",
+        "Current_A"
+      ],
+      "reason": "Instantaneous cycle power dissipation P = V * I",
+      "origin": "domain_template",
+      "rows_count": 10000,
+      "parquet_path": "D:\\predictive_framework\\feature_store\\features\\effective_power_est.parquet",
+      "created_at": "2026-11-07T10:17:48Z",
+      "version": 1
+    },
+    "soh_health_tier": {
+      "name": "soh_health_tier",
+      "data_type": "object",
+      "operation": "bin",
+      "source_columns": [
+        "SOH_Percent_Est"
+      ],
+      "reason": "Domain defined threshold binning",
+      "origin": "domain_template",
+      "rows_count": 10000,
+      "parquet_path": "D:\\predictive_framework\\feature_store\\features\\soh_health_tier.parquet",
+      "created_at": "2026-11-07T10:17:48Z",
+      "version": 1
+    },
+    "Capacity_Ah_per_Energy_Wh_Est": {
+      "name": "Capacity_Ah_per_Energy_Wh_Est",
+      "data_type": "float64",
+      "operation": "ratio",
+      "source_columns": [
+        "Capacity_Ah",
+        "Energy_Wh_Est"
+      ],
+      "reason": "Capture physical coupling ratio between Capacity_Ah and Energy_Wh_Est",
+      "origin": "eda_suggestion",
+      "rows_count": 10000,
+      "parquet_path": "D:\\predictive_framework\\feature_store\\features\\Capacity_Ah_per_Energy_Wh_Est.parquet",
+      "created_at": "2026-11-07T10:55:50Z",
+      "version": 1
+    },
+    "Capacity_Ah_per_SOH_Percent_Est": {
+      "name": "Capacity_Ah_per_SOH_Percent_Est",
+      "data_type": "float64",
+      "operation": "ratio",
+      "source_columns": [
+        "Capacity_Ah",
+        "SOH_Percent_Est"
+      ],
+      "reason": "Capture physical coupling ratio between Capacity_Ah and SOH_Percent_Est",
+      "origin": "eda_suggestion",
+      "rows_count": 10000,
+      "parquet_path": "D:\\predictive_framework\\feature_store\\features\\Capacity_Ah_per_SOH_Percent_Est.parquet",
+      "created_at": "2026-11-07T10:55:50Z",
+      "version": 1
+    },
+    "Energy_Wh_Est_per_SOH_Percent_Est": {
+      "name": "Energy_Wh_Est_per_SOH_Percent_Est",
+      "data_type": "float64",
+      "operation": "ratio",
+      "source_columns": [
+        "Energy_Wh_Est",
+        "SOH_Percent_Est"
+      ],
+      "reason": "Capture physical coupling ratio between Energy_Wh_Est and SOH_Percent_Est",
+      "origin": "eda_suggestion",
+      "rows_count": 10000,
+      "parquet_path": "D:\\predictive_framework\\feature_store\\features\\Energy_Wh_Est_per_SOH_Percent_Est.parquet",
+      "created_at": "2026-11-07T10:55:51Z",
+      "version": 1
+    },
+    "Cycle_hour": {
+      "name": "Cycle_hour",
+      "data_type": "int32",
+      "operation": "datetime_part",
+      "source_columns": [
+        "Cycle"
+      ],
+      "reason": "Extract diurnal/hourly operational cycles.",
+      "origin": "eda_suggestion",
+      "rows_count": 10000,
+      "parquet_path": "D:\\predictive_framework\\feature_store\\features\\Cycle_hour.parquet",
+      "created_at": "2026-11-07T10:55:51Z",
       "version": 1
     }
   },

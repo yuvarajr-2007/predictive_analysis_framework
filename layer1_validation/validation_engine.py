@@ -55,6 +55,14 @@ class ValidationEngine:
         if user_config_override:
             config.update(user_config_override)
 
+        # Smart adaptation: If a domain's required columns are completely absent, auto-fallback to general_custom
+        req_cols = config.get("required_columns", [])
+        if req_cols and df is not None and not any(c in df.columns for c in req_cols):
+            domain_name = "general_custom"
+            config = self.load_config("general_custom")
+            if user_config_override:
+                config.update(user_config_override)
+
         results: List[Dict[str, Any]] = []
         overall_status = "PASS"
         checks_run = []

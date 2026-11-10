@@ -1,0 +1,33 @@
+domain: "silicon_anode_battery"
+version: "1.0.0"
+groups:
+  voltage:
+    - "Voltage_Mean_V"
+    - "Voltage_Min_V"
+    - "Voltage_Max_V"
+  capacity_soh:
+    - "Capacity_Ah"
+    - "SOH_Percent_Est"
+  thermal_current:
+    - "Temperature_C"
+    - "Current_A"
+
+interactions:
+  - name: "voltage_spread"
+    operation: "subtract"
+    inputs: ["Voltage_Max_V", "Voltage_Min_V"]
+    reason: "Voltage delta across cycle - proxy for internal cell impedance"
+  - name: "thermal_current_product"
+    operation: "multiply"
+    inputs: ["Temperature_C", "Current_A"]
+    reason: "Thermal-current stress metric (Joule heat proxy)"
+  - name: "effective_power_est"
+    operation: "multiply"
+    inputs: ["Voltage_Mean_V", "Current_A"]
+    reason: "Instantaneous cycle power dissipation P = V * I"
+
+bins:
+  - column: "SOH_Percent_Est"
+    output_name: "soh_health_tier"
+    bins: [0.0, 80.0, 95.0, 110.0]
+    labels: ["degraded", "nominal", "optimal"]

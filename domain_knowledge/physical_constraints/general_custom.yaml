@@ -1,0 +1,3 @@
+domain: "general_custom"
+version: "1.0.0"
+constraints: []  # Generic domain: no rigid domain constraints enforced
